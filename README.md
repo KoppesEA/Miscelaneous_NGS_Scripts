@@ -9,7 +9,7 @@ Strandededness check for RNA-Seq using ReSQC and Bedops
 gene_ID and gene_name extraction from ensemble GTF (Mmus GRCm39 as example) to a tsv conversion table
 
 
-### `GTF_Ensembl_Gene_IDextraction_Mmusv104.sh`
+### `GTF_Ensembl_PWSextraction_v104.sh`
 Extraction of PWS genes based on genomic coordinates from ensemble GTF (Mmus GRCm39 as example)
 
 
