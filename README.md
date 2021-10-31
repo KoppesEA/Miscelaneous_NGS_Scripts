@@ -10,7 +10,7 @@ gene_ID and gene_name extraction from ensemble GTF (Mmus GRCm39 as example) to a
 
 
 ### `GTF_Ensembl_PWSextraction_v104.sh`
-Extraction of PWS genes based on genomic coordinates from ensemble GTF (Mmus GRCm39 as example)
+Extraction of the PWS imprinted domain genes on Mmus Chr7 based on genomic coordinates from ensemble GTF (Mmus GRCm39 as example)
 
 
 ## References  
