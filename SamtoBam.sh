@@ -19,7 +19,7 @@ do
 	-O BAM \
 	-o ${filebase}.bam \
 	$datafile
-	samtools index $datafile
+	samtools index $datafile.bam
 done
 
 
