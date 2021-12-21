@@ -11,7 +11,7 @@ gene_ID and gene_name extraction from ensembl GTF (Mmus GRCm39 as example) to a 
 ### `GTF_Ensembl_PWSextraction_v104.sh`
 Extraction of the PWS imprinted domain genes on Mmus Chr7 based on genomic coordinates from ensembl GTF (Mmus GRCm39 as example)  
 
-### 'SamtoBam.sh`
+### `SamtoBam.sh`
 Convert .sam files using samtools sort then index as bin/bash script
 
 ### `md5sum_script.sh` and `md5sum_script_gunzip.sh`
