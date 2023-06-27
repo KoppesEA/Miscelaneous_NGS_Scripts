@@ -17,8 +17,8 @@ Convert .sam files using samtools sort then index as bin/bash script
 ### `md5sum_script.sh` and `md5sum_script_gunzip.sh`
 short bash scripts to get md5 checksum. used prior to NCBI/Geo upload
 
-### `SRX_IdentifierMetadata.awk`
-AWK script to extract SRXxxxxxxxx IDs from SRA Run Selector Meta data. This was needed for input into nf-core fetchings rather than SRA IDs.
+### `SRX_IdentifierMetadata.sh`
+ script to extract SRXxxxxxxxx IDs from SRA Run Selector Meta data. This was needed for input into nf-core fetchings rather than SRA IDs.
 
 
 ## References  
