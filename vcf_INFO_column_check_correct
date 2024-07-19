@@ -1,0 +1,67 @@
+## VCF 8th column "INFO" should not contain spaces...
+
+
+
+
+## 6/20/2024
+## error from gatk in pipeline indicating white spaces in INFO field of VCF
+## 
+awk -v FS='\t' '$8 ~ " " {print $0, NR}' snp.raw.vcf  #to determine line numbers where column 8 have spaces
+## use awk or sed command to replace white spaces in the 8th column with an underscore
+
+#or possibly load into R, stringr replace @INFO and then output new file?
+
+Ensembl Sscrofa11.1 v104 vcf has spaces and tabs in the 8th column from Axiom Genotyping Array
+[eak37@htc-n28 Sscrofa_v11.1_v104]$ zcat sus_scrofa.vcf.gz | awk -v FS='\t' '$8 ~ " " {print $8, NR}' | uniq |head -n 10
+Axiom Genotyping Array_1;TSA=SNV 121
+Axiom Genotyping Array_1;TSA=SNV 344
+Axiom Genotyping Array_1;TSA=SNV 3079
+Axiom Genotyping Array_1;TSA=SNV 3110
+Axiom Genotyping Array_1;TSA=SNV 3218
+Axiom Genotyping Array_1;TSA=SNV 3227
+Axiom Genotyping Array_1;TSA=SNV 3234
+Axiom Genotyping Array_1;TSA=SNV 3499
+Axiom Genotyping Array_1;TSA=SNV 3719
+Axiom Genotyping Array_1;TSA=SNV 3772
+
+[eak37@htc-n28 Sscrofa_v11.1_v104]$ zcat sus_scrofa.vcf.gz | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | awk -v FS='\t' '$8 ~ "Axiom" {print $8, NR}' | head | column -t
+Axiom_Genotyping_Array_1;TSA=SNV  121
+Axiom_Genotyping_Array_1;TSA=SNV  344
+Axiom_Genotyping_Array_1;TSA=SNV  3079
+Axiom_Genotyping_Array_1;TSA=SNV  3110
+Axiom_Genotyping_Array_1;TSA=SNV  3218
+Axiom_Genotyping_Array_1;TSA=SNV  3227
+Axiom_Genotyping_Array_1;TSA=SNV  3234
+Axiom_Genotyping_Array_1;TSA=SNV  3499
+Axiom_Genotyping_Array_1;TSA=SNV  3719
+Axiom_Genotyping_Array_1;TSA=SNV  3772
+
+## there is a tab between TSA=SNV and numeric
+
+## command to rewrite
+gunzip -c sus_scrofa.vcf.gz | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | gzip > sus_scrofa_forGATK.vcf.gz &
+
+##this works, .gz file changes from 661MB to 641MB
+## also implemented as a script as wasnt sure if ran to completion
+
+#check no more spaces:  
+zcat sus_scrofa_forGATK.vcf.gz | awk -v FS='\t' '$8 ~ " " {print $8, NR}' | uniq |head -n 10 & 
+#no output made
+
+##make new tbi index
+module load bcftools/1.15.1
+bcftools index -t sus_scrofa_forGATK.vcf.gz #needed .tbi
+
+##couldn't tabix gzipped file, need to call bgzip from samtools or bcftools 
+
+#after rewriting script to use htslib bgzip the output file is now matching at 661MB and a .tbi file was generated
+
+##changed workdir to RNAvar-nfcore/work
+
+removing intermediate files from  total-RNA-seq dir above
+rm -rf [a-z0-9][a-z0-9] #rm doesn't use regex like ^ and $
+find . -type d -regex './[a-z0-9]\{2\}' -exec rm -rf {} + # different option using find regex and execute rm
+find . -type d -regex './[a-z|0-9][a-z|0-9]' ##this actually works
+find . -type d -regex './[a-z|0-9]\{2\}'
+
+## See PWS Pig Genomics Repo
